@@ -1,21 +1,18 @@
-package com.getoffer.shortlink.admin.dto.resp;
+package com.getoffer.shortlink.admin.dto.req;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * 用户返回参数实体
- */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserRespDTORealPhone {
-
+public class UserRegisterReqDTO {
     private Long id;
     private String username;
     private String realName;
+    private String password;
     private String phone;
     private String mail;
-
 }
