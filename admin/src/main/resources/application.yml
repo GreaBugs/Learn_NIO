@@ -5,14 +5,19 @@ spring:
   datasource:
     username: root
     password: 521212YM!
-    url: jdbc:mysql://localhost:3306/shortlink
-    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/shortlink
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+    # ShardingSphere 对 Driver 自定义，实现分库分表等隐藏逻辑
+    driver-class-name: org.apache.shardingsphere.driver.ShardingSphereDriver
+    # ShardingSphere 配置文件路径
+    url: jdbc:shardingsphere:classpath:shardingsphere-config.yaml
     hikari:
       connection-test-query: select 1
       connection-timeout: 20000
       idle-timeout: 300000
       maximum-pool-size: 5
       minimum-idle: 5
+
   data:
     redis:
       host: 127.0.0.1
