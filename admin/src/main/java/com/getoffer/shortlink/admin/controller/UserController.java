@@ -3,7 +3,10 @@ package com.getoffer.shortlink.admin.controller;
 import cn.hutool.core.bean.BeanUtil;
 import com.getoffer.shortlink.admin.common.convention.result.Result;
 import com.getoffer.shortlink.admin.common.convention.result.Results;
+import com.getoffer.shortlink.admin.dto.req.UserLoginReqDTO;
 import com.getoffer.shortlink.admin.dto.req.UserRegisterReqDTO;
+import com.getoffer.shortlink.admin.dto.req.UserUpdateReqDTO;
+import com.getoffer.shortlink.admin.dto.resp.UserLoginRespDTO;
 import com.getoffer.shortlink.admin.dto.resp.UserRespDTO;
 import com.getoffer.shortlink.admin.dto.resp.UserRespDTORealPhone;
 import com.getoffer.shortlink.admin.service.UserService;
@@ -53,6 +56,37 @@ public class UserController {
     @PostMapping()
     public Result<Void> register (@RequestBody UserRegisterReqDTO requestParam){
         userService.Register(requestParam);
+        return Results.success();
+    }
+
+    @PutMapping()
+    public Result<Void> update (@RequestBody UserUpdateReqDTO requestParam){
+        userService.update(requestParam);
+        return Results.success();
+    }
+
+    @PostMapping("/login")
+    public Result<UserLoginRespDTO> login (@RequestBody UserLoginReqDTO requestParam){
+        UserLoginRespDTO userLoginRespDTO = userService.login(requestParam);
+        return Results.success(userLoginRespDTO);
+    }
+
+    @PostMapping("/check-login")
+    public Result<String> checkLogin (@RequestParam("username") String username, @RequestParam("token") String token){
+        boolean login_flag = userService.checkLogin(username, token);
+        if (login_flag){
+            return Results.success("用户已登录");
+        }else {
+            return Results.success("用户未登录");
+        }
+    }
+
+    /**
+     * 用户退出登录
+     */
+    @DeleteMapping("/logout")
+    public Result<Void> logout(@RequestParam("username") String username, @RequestParam("token") String token) {
+        userService.logout(username, token);
         return Results.success();
     }
 
